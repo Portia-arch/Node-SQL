@@ -1,16 +1,21 @@
-pgtest = require('pgtest');
-main = require('../src/node-script');
+const {addNewVisitor} = require('../src/node-script')
 
-describe('hi', function() {
+describe("node sql", function() {
+    
 
-pgtest.expect('INSERT INTO Visitors(ID, Visitor_Name, Visitor_Age, Date_Of_Visit, Time_Of_Visit, Assistant_Name, Comments) VALUES ($1, $2, $3, $4, $5, $6, $7)').returning(null, [2, 'Nhlanhla Ngobese', 16, '12/04/2019', '12:30', 'Lwazi', 'Oh la la']);
+    it("save data to the database", async function(done) {
 
-    pgtest.connect('foo', function(error, pool, done) {
-        pool.query('INSERT INTO Visitors(ID, Visitor_Name, Visitor_Age, Date_Of_Visit, Time_Of_Visit, Assistant_Name, Comments) VALUES ($1, $2, $3, $4, $5, $6, $7)', function(error, data){
-            console.log(data);
-            done();
-        });
-    });
+        let addthings = await addNewVisitor(2, 'Nhlanhla Ngobese', 16, '12/04/2019', '12:30', 'Lwazi', 'Oh la la')
 
-    pgtest.check()
+        expect(addthings[0].ID).toEqual(2)
+        expect(addthings[0].Visitor_Name).toEqual('Nhlanhla Ngobese')
+        expect(addthings[0].Visitor_Age).toEqual(16)
+        expect(addthings[0].Date_Of_Visit).toEqual('12/04/2019')
+        expect(addthings[0].Time_Of_Visit).toEqual('12:30')
+        expect(addthings[0].Assistant).toEqual('Lwazi')
+        expect(addthings[0].Comments).toEqual('Oh la la')
+
+        done()
+    })
+
 })
