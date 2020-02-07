@@ -1,0 +1,25 @@
+{
+  "name": "postgres",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Portia-arch/Node-SQL.git"
+  },
+  "keywords": [
+    "psql"
+  ],
+  "author": "Portia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Portia-arch/Node-SQL/issues"
+  },
+  "homepage": "https://github.com/Portia-arch/Node-SQL#readme",
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  }
+}
