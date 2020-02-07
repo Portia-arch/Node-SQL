@@ -3,7 +3,7 @@ const {addNewVisitor, listVisitors, deleteVisitor} = require('../src/node-script
      const details = {
        Name: "Nhlanhla Ngobese",
        Age: 16,
-       Date: new Date("12/04/2019"),
+       date: new Date("12/04/2019"),
        Time: "12:30:00",
        Assistant: "Lwazi",
        Comments: "Oh la la"
@@ -13,17 +13,17 @@ describe("node sql", function() {
 
     it("save data to the database", async function(done) {
 
-        await addNewVisitor(details.Name, details.Age, details.Date, details.Time, details.Assistant, details.Comments)
-            .then(function(data){
+        await addNewVisitor(details.Name, details.Age, details.date, details.Time, details.Assistant, details.Comments)
+            .then(results => {
 
-                const objDetails = data.rows
+                const objDetails = results.rows
 
-                expect(objDetails[0].Name).toEqual(details.Name);
-                expect(objDetails[0].Age).toEqual(details.Age);
-                expect(objDetails[0].Date).toEqual(details.Date);
-                expect(objDetails[0].Time).toEqual(details.Time);
-                expect(objDetails[0].Assistant).toEqual(details.Assistant);
-                expect(objDetails[0].Comments).toEqual(details.Comments);
+                expect(objDetails[0].Name).toBe(details.Name);
+                expect(objDetails[0].Age).toBe(details.Age);
+                expect(objDetails[0].Date).toEqual(details.date);
+                expect(objDetails[0].Time).toBe(details.Time);
+                expect(objDetails[0].Assistant).toBe(details.Assistant);
+                expect(objDetails[0].Comments).toBe(details.Comments);
         });
 
         done();

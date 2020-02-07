@@ -10,24 +10,26 @@ const pool = new Pool({
 ;
 
 const addNewVisitor = async function(
-  ID,
   Name,
   Age,
-  Date,
+  date,
   Time,
   Assistant,
   Comments
 ) {
-  const sql =
-    "INSERT INTO Visitors(Visitor_Name, Visitor_Age, Date_Of_Visit, Time_Of_Visit, Assistant_Name, Comments) VALUES ($1, $2, $3, $4, $5, $6)";
-  const data = [Name, Age, Date, Time, Assistant, Comments];
-
+  
   try {
-    results = await pool.query(sql, data);
-    console.log(results.rows);
-  } catch (error) {
-    console.log(error);
-  }
+
+    const sql =
+      "INSERT INTO Visitors(Visitor_Name, Visitor_Age, Date_Of_Visit, Time_Of_Visit, Assistant_Name, Comments) VALUES ($1, $2, $3, $4, $5, $6)  RETURNING *";
+    const data = [Name, Age, date, Time, Assistant, Comments];
+
+     let results =  await pool.query(sql, data);
+    return results.rows;
+
+        } catch (error) {
+            console.log(error);
+        }
 };
 
 
@@ -36,8 +38,7 @@ const listVisitors = async function() {
 
   try {
     results = await pool.query(sql);
-
-    console.log(results.rows);
+    return results.rows;
 
   } catch (error) {
     console.log(error);
@@ -51,8 +52,7 @@ const deleteVisitor = async function(ID) {
 
   try {
     results = await pool.query(sql, data);
-
-    console.log(results.rows);
+    return results.rows;
 
   } catch (error) {
     console.log(error);
@@ -71,12 +71,12 @@ const updateVisitor = async function(
 )  {
   const sql =
     "UPDATE Visitors SET Visitor_Name= $2, Visitor_Age= $3, Date_Of_Visit= $4, Time_Of_Visit= $5, Assistant_Name= $6, Comments= $7 Where ID= $1";
-  const data = [ID, Name, Age, Date, Time, Assistant, Comments];
+  const data = [ID, Name, Age, date, Time, Assistant, Comments];
 
   try {
     results = await pool.query(sql, data);
    
-    console.log(results.rows);
+    return results.rows;
     
   } catch (error) {
     console.log(error);
@@ -91,7 +91,7 @@ const viewVisitor = async function(ID) {
   try {
     results = await pool.query(sql, data);
 
-    console.log(results.rows);
+    return results.rows;
  
   } catch (error) {
     console.log(error);
@@ -105,13 +105,13 @@ const dropVisitor = async  function() {
   try {
     results = await pool.query(sql);
 
-    console.log(results.rows);
+    return results.rows;
     // pool.end();
   } catch (error) {
     console.log(error);
   }
 };
-dropVisitor(2, 3, 4, 5)
+// dropVisitor(2, 3, 4, 5)
 
 module.exports = {
   addNewVisitor,
