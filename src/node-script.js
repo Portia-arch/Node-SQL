@@ -1,12 +1,6 @@
 require('dotenv').config();
 const { Pool } = require("pg");
-const pool = new Pool({
-  user: "user",
-  localhost: "localhost",
-  database: "db",
-  password: "pass",
-  port: 5432
-});
+const pool = new Pool();
 ;
 
 const addNewVisitor = async function(
