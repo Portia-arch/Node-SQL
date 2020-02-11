@@ -1,4 +1,4 @@
-// require('dotenv').config();
+require('dotenv').config();
 const { Pool } = require("pg");
 const pool = new Pool({
   user: "user",
@@ -32,12 +32,12 @@ const addNewVisitor = async function(
         }
 };
 
-
 const listVisitors = async function() {
   const sql = "Select ID, Visitor_Name FROM Visitors";
 
   try {
     results = await pool.query(sql);
+
     return results.rows;
 
   } catch (error) {
@@ -45,14 +45,14 @@ const listVisitors = async function() {
   }
 };
 
-
 const deleteVisitor = async function(ID) {
   const sql = "DELETE FROM Visitors WHERE ID= $1";
   const data = [ID];
 
   try {
     results = await pool.query(sql, data);
-    return results.rows;
+
+    return results;
 
   } catch (error) {
     console.log(error);
@@ -64,7 +64,7 @@ const updateVisitor = async function(
   ID,
   Name,
   Age,
-  Date,
+  date,
   Time,
   Assistant,
   Comments
@@ -75,8 +75,8 @@ const updateVisitor = async function(
 
   try {
     results = await pool.query(sql, data);
-   
-    return results.rows;
+
+    return results;
     
   } catch (error) {
     console.log(error);
@@ -99,25 +99,23 @@ const viewVisitor = async function(ID) {
 };
 
 
-const dropVisitor = async  function() {
+const dropVisitors = async  function() {
   const sql = "DELETE FROM Visitors";
 
   try {
     results = await pool.query(sql);
-
     return results.rows;
-    // pool.end();
+    
   } catch (error) {
     console.log(error);
   }
 };
-// dropVisitor(2, 3, 4, 5)
 
 module.exports = {
   addNewVisitor,
   updateVisitor,
   listVisitors,
   deleteVisitor,
-  dropVisitor,
+  dropVisitors,
   viewVisitor
 };
