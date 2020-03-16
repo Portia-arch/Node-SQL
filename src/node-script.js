@@ -1,7 +1,27 @@
 require('dotenv').config();
 const { Pool } = require("pg");
 const pool = new Pool();
-;
+
+const createTable = async function () {
+  try {
+    const sql = await pool.query(
+      `CREATE TABLE IF NOT EXISTS 
+           Visitors(
+            ID SERIAL PRIMARY KEY,
+            Visitor_Name VARCHAR(100),
+            Assistant_Name VARCHAR(100),
+            Visitor_Age INTEGER,
+            Date_Of_Visit DATE,
+            Time_Of_Visit TIME,
+            Comments VARCHAR(225)
+        );`
+    );
+    // console.log(sql.rows)
+  } catch (e) {
+    console.log(e);
+  }
+};
+createTable();
 
 const addNewVisitor = async function(
   Name,
@@ -25,6 +45,7 @@ const addNewVisitor = async function(
             console.log(error);
         }
 };
+addNewVisitor()
 
 const listVisitors = async function() {
   const sql = "Select ID, Visitor_Name FROM Visitors";
@@ -106,6 +127,7 @@ const dropVisitors = async  function() {
 };
 
 module.exports = {
+  createTable,
   addNewVisitor,
   updateVisitor,
   listVisitors,
